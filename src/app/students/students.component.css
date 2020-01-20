@@ -1,0 +1,20 @@
+
+.app-body{
+    padding:10px;
+    margin-top:15px;
+    
+}
+.app-content{
+
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.btn{
+    margin-top: 5px;;
+    margin-right: 5px;
+}
+
+.tableHeaders{
+    background-color:#9999;
+}

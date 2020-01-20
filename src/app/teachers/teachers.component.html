@@ -1,0 +1,122 @@
+<div class="container app-body" >
+
+    <!--List of Teachers View-->
+    <div class="container app-content col" *ngIf="section==1" >
+      
+      <button class="btn btn-primary" style="margin-left: 15px;" (click)="changeView(2)">Add New</button>
+
+      <div id="studentsTbl" class="container">
+        <table class="table table-bordered lectTable table-hover">
+          <tr class="tableHeaders">
+            <th>Teachers</th>
+          </tr>
+
+        <tr class="tableHeaders">
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Actions</th>
+
+        </tr>  
+          
+
+          <tbody class="table-stiped">
+            <tr *ngFor="let item of teachersDB">
+                <td>{{item.id}}</td>
+                <td>{{item.firstName}}</td>
+                <td>{{item.lastName}}</td>
+                <td>
+                  <button class="btn btn-warning" (click)="onSelectUpdate(item)">Edit</button>
+                  <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" 
+                  (click)="getId(item.id)">Delete</button>
+
+                </td>
+            
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+    </div>
+
+    <!--Add New Teacher View-->
+    <div class="container app-content" *ngIf="section==2">
+
+      <h3 class="h3">Fill in Teacher Details</h3>
+
+      <div class="form group">
+        <label>First Name</label>
+        <input type="text" class="form-control" [(ngModel)]= "fname" />
+      </div>
+
+      <div class="form group">
+        <label>Last Name</label>
+        <input type="text" class="form-control" [(ngModel)]= "lname" />
+      </div>
+
+      <div class="form group">
+        <label>Email</label>
+        <input type="email" class="form-control" [(ngModel)]= "email" />
+      </div>
+
+      <div class="form group">
+        <label>Phone Number</label>
+        <input type="text" class="form-control" [(ngModel)]= "phone" />
+      </div>
+
+      <div class="form group">
+        <label>Date Of Birth</label>
+        <input type="datetime" class="form-control" [(ngModel)]= "dob"  placeholder="YYYY-MM-DD"/>
+      </div>
+
+      <button type="submit" class="btn btn-success" (click)="onSaveTeacher()">Save</button>
+    </div>
+
+    <!--Edit Teacher View-->
+    <div class="container app-content" *ngIf="edit==true">
+
+    <div class="form group">
+      <label>First Name</label>
+      <input type="text" class="form-control" [(ngModel)]= "fname" />
+    </div>
+
+    <div class="form group">
+      <label>Last Name</label>
+      <input type="text" class="form-control" [(ngModel)]= "lname" />
+    </div>
+
+    <div class="form group">
+      <label>Email</label>
+      <input type="email" class="form-control" [(ngModel)]= "email" />
+    </div>
+
+    <div class="form group">
+      <label>Phone Number</label>
+      <input type="text" class="form-control" [(ngModel)]= "phone" />
+    </div>
+
+    <button type="submit" class="btn btn-success" (click)="onUpdateTeacher()">Update</button>
+
+    </div>
+
+    <!--Prompt Modal-->
+    <div class="modal fade"  id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p>Are You Sure?.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal" (click)="onDeleteTeacher()">Yes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+</div>
+

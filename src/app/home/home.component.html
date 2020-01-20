@@ -1,0 +1,175 @@
+  <!-- Home Page-->
+
+  <!--Lecture List View-->
+  <div class="container app-body" >
+  
+    <div id="lectures" class="container app-content">
+  
+      <div class="container row">
+  
+        <div class="container col">
+          <button class ="btn btn-primary" (click)="openAddMenu()">Add New Lecture</button>
+          
+          
+            <table class="table table-bordered lectTable table-hover">
+              <tr class="tableHeaders">
+                <th>Lectures</th>
+              </tr>
+      
+              <tr class="tableHeaders">
+                <th>#</th>
+                <th>Desciption</th>
+                <th>Actions</th>
+              </tr>
+              
+      
+              <tbody class="table-stiped">
+                <tr  *ngFor="let item of lecturesDB">
+                    <td>{{item.id}}</td>
+                    <td>{{item.description}}</td>
+                    <td><button class="btn btn-primary" (click)="openMenu(item.id,item.description)">Select</button></td>
+  
+                </tr>
+  
+              </tbody>
+  
+            </table>
+  
+          </div>
+      
+          <div class="container col border well well-sm" *ngIf="selected==true">
+            <h3 class="h3">Select Teacher For {{lectureName}}</h3>
+
+            <div class="form-group" >
+
+                <div class="custom-control custom-control-inline custom-radio" *ngFor="let item of teachersDB" >
+                    <input class="custom-control-input" type="radio" name="teacher" id={{item.id}} />
+                    <label class="custom-control-label" for={{item.id}} >{{item.firstName + " " + item.lastName}}</label>
+                </div>
+                
+            
+            </div>
+                
+  
+  
+          </div>
+    </div>
+      
+    <div id="students" class="container app-content" *ngIf="selected==true">
+          <h3 class="h3">Students For {{lectureName}}</h3>
+          <button class="btn btn-primary" (click)="openAddLectMenu()">Add Existing Student</button>
+  
+          <div class="container">
+            <table class="table table-bordered lectTable table-hover" style="margin-left: -15px;">
+              <tr class="tableHeaders">
+                <th>Students</th>
+              </tr>
+      
+              <tr class="tableHeaders">
+
+                  <th>#</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Actions</th>
+              </tr>
+            
+      
+              <tbody class="table-stiped" >
+                <tr *ngFor="let item of lectureStudentDB" >
+                    <td *ngIf="item.lectureId==lectureId">{{item.lectureId}}</td>
+                    <td>
+                      <div *ngFor="let std of studentsDB"> 
+                        <p *ngIf="item.studentId == std.id && item.lectureId==lectureId">{{std.firstName}}</p>
+                      </div>
+                    </td>
+                    <td >
+                      <div *ngFor="let std of studentsDB"> 
+                        <p *ngIf="item.studentId == std.id && item.lectureId==lectureId">{{std.lastName}}</p>
+                      </div>
+                    </td>
+
+                    <td >
+                      <div *ngFor="let std of studentsDB"> 
+                        <button class="btn btn-danger" *ngIf="item.studentId == std.id && item.lectureId==lectureId" data-toggle="modal" data-target="#deleteModal" 
+                        (click)="getId(item.id)">Remove</button>
+                      </div>
+                      
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+  
+    </div>
+  
+  </div> 
+
+
+  <div class="container app-body" *ngIf="addNew==true">
+
+    <h3 class="h3">Add New Lecture</h3>
+
+    <div class="form group">
+      <label>Descriptions</label>
+      <input type="text" class="form-control" [(ngModel)]= "desc" />
+    </div>
+
+    <div class="form group">
+      <label>Teacher</label>
+      <select class="form-control" [(ngModel)]= "teacherId">
+
+        <option *ngFor="let item of teachersDB" [value]="item.id">{{item.lastName}}</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success" (click)="onSaveLecture()">Save</button>
+
+
+  </div>
+
+
+  <div class="container app-body" *ngIf="addNewLect==true">
+
+    <h3 class="h3">Add Existing Student to Lecture</h3>
+    <div class="form group">
+      <label>Select Lecture</label>
+      <select class="form-control" [(ngModel)]= "lectureId">
+
+        <option *ngFor="let item of lecturesDB" [value]="item.id">{{item.description}}</option>
+      </select>
+    </div>
+
+    <div class="form group">
+      <label>Select Student</label>
+      <select class="form-control" [(ngModel)]= "studentId">
+
+        <option *ngFor="let item of studentsDB" [value]="item.id">{{item.lastName}}</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success" (click)="onAddLectureStudent()">Save</button>
+
+
+  </div>
+
+   <!--Prompt Modal-->
+   <div class="modal fade"  id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p>Are You Sure?.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal" (click)="onRemoveStudent()">Yes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+  
+  
+      

@@ -1,0 +1,101 @@
+
+<div class="container app-body" >
+
+  <!--List of Teachers View-->
+  <div class="container app-content" *ngIf="section==1" >
+    
+    <button class="btn btn-primary" style="margin-left: 15px;" (click)="changeView(2)">Add New</button>
+
+    <div id="lecturesTbl" class="container">
+      <table class="table table-bordered lectTable table-hover">
+        <tr class="tableHeaders">
+          <th>Lectures</th>
+        </tr>
+
+      <tr class="tableHeaders">
+        <th>#</th>
+        <th>Description</th>
+        <th>Actions</th>
+
+      </tr>  
+        
+
+        <tbody class="table-stiped">
+          <tr *ngFor="let item of lecturesDB">
+              <td>{{item.id}}</td>
+              <td>{{item.description}}</td>
+              <td>
+                <button class="btn btn-warning" (click)="onSelectUpdate(item)">Edit</button>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" 
+                (click)="getId(item.id)">Delete</button>
+
+              </td>
+          
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+  </div>
+
+  <!--Add New Lecture View-->
+  <div class="container app-content" *ngIf="section==2">
+
+    <h3 class="h3">Fill in Lecture Details</h3>
+
+    <div class="form group">
+        <label>Descriptions</label>
+        <input type="text" class="form-control" [(ngModel)]= "desc" />
+      </div>
+
+      <div class="form group">
+        <label>Teacher</label>
+        <select class="form-control" [(ngModel)]= "teacherId" >
+
+          <option *ngFor="let item of teachersDB" [value]="item.id" >{{item.lastName}}</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-success" (click)="onSaveLecture()">Save</button>
+
+  </div>
+
+  <!--Edit Teacher View-->
+  <div class="container app-content" *ngIf="edit==true">
+
+  <div class="form group">
+    <label>Descriptions</label>
+    <input type="text" class="form-control" [(ngModel)]= "desc" />
+  </div>
+
+  <div class="form group">
+    <label>Teacher</label>
+    <select class="form-control" [(ngModel)]= "teacherId">
+
+      <option *ngFor="let item of teachersDB" [value]="item.id">{{item.lastName}}</option>
+    </select>
+
+  <button type="submit" class="btn btn-success" (click)="onUpdateLecture()">Update</button>
+
+  </div>
+
+</div>
+
+<!--Prompt Modal-->
+<div class="modal fade"  id="deleteModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Are You Sure?.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="onDeleteLecture()">Yes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
